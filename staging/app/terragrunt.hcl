@@ -3,5 +3,5 @@ terraform {
 }
 inputs = {
   instance_count = 1
-  instance_type  = "m3.micro"
+  instance_type  = "m3.medium"
 }
