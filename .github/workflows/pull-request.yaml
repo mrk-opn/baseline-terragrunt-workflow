@@ -6,7 +6,16 @@ on:
       - main
 
 jobs:
-  add-reviews:
+  comment:
     runs-on: ubuntu-latest
     steps:
-      - uses: kentaro-m/auto-assign-action@v1.2.2
+      - uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.COMMENT_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
