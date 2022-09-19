@@ -29,8 +29,7 @@ generate "provider_versions" {
     }
 
     provider "aws" {
-      region  = var.region
-      shared_credentials_file = "~/.aws/config"
+      region  = "us-east-1"
     }
   EOF
 }

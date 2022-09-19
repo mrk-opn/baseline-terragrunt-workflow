@@ -6,16 +6,38 @@ on:
       - main
 
 jobs:
-  comment:
+  terraform:
+    name: 'Terraform'
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.COMMENT_TOKEN }}
+      TF_IN_AUTOMATION: true
+
     steps:
-      - uses: actions/github-script@v5
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
         with:
-          github-token: ${{secrets.COMMENT_TOKEN}}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
-            })
+          terraform_version: 0.15.0
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out workspace.plan
+
+      - name: Post Plan
+        if: always() && github.ref != 'refs/heads/master' && (steps.plan.outcome == 'success' || steps.plan.outcome == 'failure')
+        uses: robburger/terraform-pr-commenter@v1
+        with:
+          commenter_type: plan
+          commenter_input: ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
+          commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
+
+      # - uses: actions/github-script@v5
+      #   with:
+      #     github-token: ${{secrets.COMMENT_TOKEN}}
+      #     script: |
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: '👋 Thanks for reporting!'
+      #       })
