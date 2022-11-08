@@ -7,14 +7,6 @@ include {
   path = find_in_parent_folders()
 }
 
-dependency "root" {
-  config_path = "../../root"
-
-  mock_outputs = {
-    environment = "dummy"
-  }
-}
-
 inputs = {
   name                    = "twallet-jp-apps"
   image_tag_mutability    = "MUTABLE"
@@ -37,6 +29,6 @@ inputs = {
     ]
   }
   tags = {
-    Environment = dependency.root.outputs.environment
+    Environment = "demo"
   }
 }
