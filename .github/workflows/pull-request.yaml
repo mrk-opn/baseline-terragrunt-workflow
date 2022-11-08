@@ -38,9 +38,7 @@ jobs:
           echo $PWD
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [[ $file == *.hcl ]]; then
-              HCLPATH=$(echo "${$file%/*}/")
-              echo $HCLPATH
-              cd $HCLPATH
+              cd $(dirname $file)
               terragrunt plan
             fi
           done
