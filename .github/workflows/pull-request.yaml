@@ -31,6 +31,12 @@ jobs:
         with:
           files: |
             staging/**
+            
+      - name: Setup Terragrunt v0.38.4
+        run: |
+          sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
+          sudo chmod +x /bin/terragrunt
+          terragrunt -v
 
       - name: List all changed files
         run: |
@@ -39,7 +45,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [[ $file == *.hcl ]]; then
               cd $(dirname $file)
-              terragrunt init
+              terragrunt init --terragrunt-non-interactive
             fi
           done
 

@@ -15,5 +15,5 @@ inputs = {
   instance_count = 1
   instance_type  = "m3.medium"
   subnet_id = "subnet-eddcdzz4"
-  vpc_security_group_ids = ["sg-12345678"]
+  vpc_security_group_ids = ["sg-112345678"]
 }
