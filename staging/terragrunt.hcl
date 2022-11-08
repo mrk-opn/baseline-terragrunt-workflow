@@ -1,7 +1,7 @@
 remote_state {
   backend = "s3"
   config = {
-    bucket         = "opn-staging-demo-test"
+    bucket         = "opn-demo-test"
     key            = "${path_relative_to_include()}/demo-test.tfstate"
     region         = local.region
     encrypt        = true
@@ -11,7 +11,7 @@ remote_state {
 
 locals {
   region      = "us-east-1"
-  environment = "staging"
+  environment = "demo"
 }
 
 inputs = {
@@ -29,7 +29,7 @@ generate "provider_versions" {
     }
 
     provider "aws" {
-      region  = "us-east-1"
+      region  = "${local.region}"
     }
   EOF
 }

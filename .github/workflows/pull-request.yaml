@@ -1,36 +1,40 @@
 name: 'Pull request (Terragrunt Plan)'
-on:
-  pull_request:
-    # Sequence of patterns matched against refs/heads
-    branches:
-      - main
+on: [workflow_dispatch]
+# on:
+#   pull_request:
+#     # Sequence of patterns matched against refs/heads
+#     branches:
+#       - main
+env:
+  tf_version: 'latest'
+  tg_version: 'latest'
+  tf_working_dir: '.'
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  terragrunt:
+    name: Example Terragrunt interaction
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.COMMENT_TOKEN }}
-      TF_IN_AUTOMATION: true
-
     steps:
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.1.0
         with:
-          terraform_version: 0.15.0
+          terragrunt_version: 0.38.7
+      - name: Interact with Terragrunt
+        run: terragrunt --version
+      
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v34
 
-      - name: Terraform Plan
-        id: plan
-        run: terraform plan -out workspace.plan
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
 
-      - name: Post Plan
-        if: always() && github.ref != 'refs/heads/master' && (steps.plan.outcome == 'success' || steps.plan.outcome == 'failure')
-        uses: robburger/terraform-pr-commenter@v1
-        with:
-          commenter_type: plan
-          commenter_input: ${{ format('{0}{1}', steps.plan.outputs.stdout, steps.plan.outputs.stderr) }}
-          commenter_exitcode: ${{ steps.plan.outputs.exitcode }}
-
+      
       # - uses: actions/github-script@v5
       #   with:
       #     github-token: ${{secrets.COMMENT_TOKEN}}
