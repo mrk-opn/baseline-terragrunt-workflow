@@ -31,7 +31,7 @@ jobs:
         with:
           files: |
             staging/**
-            
+
       - name: Setup Terragrunt v0.38.4
         run: |
           sudo wget -q -O /bin/terragrunt "https://github.com/gruntwork-io/terragrunt/releases/download/v0.38.4/terragrunt_linux_amd64"
@@ -40,11 +40,16 @@ jobs:
 
       - name: List all changed files
         run: |
+          export AWS_ACCESS_KEY_ID="ASIA4GD6X7J7RXRSYWGP"
+          export AWS_SECRET_ACCESS_KEY="LCxjDv6SYWAqfMd5ModQXZYC/YUYcbwOzc35LoE4"
+          export AWS_SESSION_TOKEN="IQoJb3JpZ2luX2VjEEUaDmFwLXNvdXRoZWFzdC0xIkcwRQIhAK8GjVu6Ww/dJPyfiMWTwHfNFLTmBmK890hjXBblft5FAiAxfqTRxobpikEJ9nhtUtxKrR4FKfWFIa2uBZaft8U1Jir6Agg+EAIaDDgzNzc4NDQzNTMyNyIMYFml8b76A3zI62p1KtcCWBc/L3u+4fNpuKSpjUfwdnThfPhtO/GCHn20BHR9KmDwQfepTZRAD1cs/tcxZ6FhUCDHZRykErcVIfWD4PjYzCgRs3Ipd0Y/Amyw41KHeitKXDEaJupqdbLNAej3OcZ1qvGU5QLOJrOP+2We1VvW+gU0dkcoFCR7Ui7FVKMxkpQ75T7d1L6vKRJtzUu/ROSHnWttjAeGppDNwQNgAiNzMiIhCCoP9Y5HOjiAFMatbK8Hr4Sw1XL8eyATbJ0SY1GbcL+NwGq6+66X9LhGy9zrJ90UjVIbc0Nsa6LlYn9yqNKNPJfSP9QY2GT1+N4ZyuEnLOJiq+wd28nsJ4KDRvyQu8ma2Gm/sCbbDrmZyYJ5HCTev/MUPs+8+qhf3Spj9tlJ1e++kX+3lEe/QSC4HrWwZwp/ob7kIm/Xz6pphpsSoFm0/XuIzZtq4vRKieERjj+iI4ONt5aguTC0xKebBjqnAT7dpDqxXAS8HF0kKUXLRycDPGBBTiD/07tJkRrqmEvvQ4qZSm7auNustE4siBcJMZl0d1iKTt3quK8cysNeJsVplciia61w8ECH06KCXBNgMkj2IfuIfttUU7SmSRawnoBZI4Knac4gRVixPfDonrYaQ3fyZr4IcRJYOgDDxHJ04/bQvYkt2U3Wyap4hXuRhEIkeEnlwVZxIHUFxp+exLCAFDW/UykW"
+          
           ls -lah
           echo $PWD
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [[ $file == *.hcl ]]; then
               cd $(dirname $file)
+              echo $PWD
               terragrunt init --terragrunt-non-interactive
             fi
           done
