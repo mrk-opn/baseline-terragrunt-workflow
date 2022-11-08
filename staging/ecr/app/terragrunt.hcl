@@ -24,7 +24,7 @@ inputs = {
     "rules" : [
       {
         "rulePriority" : 1,
-        "description" : "Keep up to 50 total im ages",
+        "description" : "Keep up to 50 total  im ages",
         "selection" : {
           "tagStatus" : "any",
           "countType" : "imageCountMoreThan",
