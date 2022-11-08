@@ -39,7 +39,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             if [[ $file == *.hcl ]]; then
               cd $(dirname $file)
-              terragrunt plan
+              terragrunt init
             fi
           done
 
