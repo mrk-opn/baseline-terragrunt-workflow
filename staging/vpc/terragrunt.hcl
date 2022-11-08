@@ -1,4 +1,6 @@
-source = "git::git@github.com:terraform-aws-modules/terraform-aws-vpc?ref=v3.14.4"
+terraform {
+  source = "git::git@github.com:terraform-aws-modules/terraform-aws-vpc?ref=v3.14.4"
+}
 
 include "root" {
   path   = find_in_parent_folders()
