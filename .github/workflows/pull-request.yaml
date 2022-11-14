@@ -52,7 +52,7 @@ jobs:
               terragrunt init --terragrunt-non-interactive
 
 
-              terragrunt apply --terragrunt-non-interactive
+              terragrunt apply -auto-approve
             fi
           done
 

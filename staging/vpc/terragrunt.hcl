@@ -25,7 +25,7 @@ inputs = {
   single_nat_gateway = true
 
   public_subnet_tags = {
-    Name = "overridden-name-public"
+    Name = "overridden-name1-public"
   }
 
   tags = {
