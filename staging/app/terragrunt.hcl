@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com:terraform-aws-modules/terraform-aws-ec2-instance?ref=v4.1.4"
+  source = "git::https:///github.com:terraform-aws-modules/terraform-aws-ec2-instance//.?ref=v4.1.4"
 }
 
 include {
