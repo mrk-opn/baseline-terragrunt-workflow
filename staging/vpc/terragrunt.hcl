@@ -1,5 +1,5 @@
 terraform {
-  source = "git::https://github.com:terraform-aws-modules/terraform-aws-vpc//.?ref=v3.14.4"
+  source = "github.com:terraform-aws-modules/terraform-aws-vpc//.?ref=v3.14.4"
 }
 
 include "root" {
@@ -25,7 +25,7 @@ inputs = {
   single_nat_gateway = true
 
   public_subnet_tags = {
-    Name = "overridden-name-public"
+    Name = "overridden- na  me-public"
   }
 
   tags = {
